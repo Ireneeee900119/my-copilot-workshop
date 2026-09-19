@@ -5,8 +5,10 @@ const todoInput = document.querySelector("#todo-input");
 const todoList = document.querySelector("#todo-list");
 const emptyMessage = document.querySelector("#empty-message");
 const remainingCount = document.querySelector("#remaining-count");
+const filterButtons = document.querySelectorAll("[data-filter]");
 
 let todos = loadTodos();
+let currentFilter = "all";
 
 // 從瀏覽器儲存空間載入待辦資料，資料損壞時回到空清單。
 function loadTodos() {
@@ -31,11 +33,37 @@ function createTodo(text) {
   };
 }
 
+function getFilteredTodos() {
+  if (currentFilter === "active") {
+    return todos.filter((todo) => !todo.completed);
+  }
+
+  if (currentFilter === "completed") {
+    return todos.filter((todo) => todo.completed);
+  }
+
+  return todos;
+}
+
+function getEmptyMessage() {
+  if (todos.length === 0) {
+    return "還沒有任何待辦事項，新增一個吧！";
+  }
+
+  if (currentFilter === "active") {
+    return "目前沒有未完成事項，太棒了！";
+  }
+
+  return "目前沒有已完成事項。切回全部即可查看其他待辦。";
+}
+
 // 依照目前資料重新繪製畫面，確保清單與儲存資料一致。
 function renderTodos() {
   todoList.replaceChildren();
 
-  todos.forEach((todo) => {
+  const visibleTodos = getFilteredTodos();
+
+  visibleTodos.forEach((todo) => {
     const item = document.createElement("li");
     item.className = "todo-item";
     item.classList.toggle("completed", todo.completed);
@@ -64,7 +92,8 @@ function renderTodos() {
 
   const incompleteCount = todos.filter((todo) => !todo.completed).length;
   remainingCount.textContent = `未完成：${incompleteCount} 項`;
-  emptyMessage.hidden = todos.length > 0;
+  emptyMessage.textContent = getEmptyMessage();
+  emptyMessage.hidden = visibleTodos.length > 0;
 }
 
 function addTodo(text) {
@@ -87,6 +116,16 @@ function deleteTodo(id) {
   renderTodos();
 }
 
+function setFilter(filter) {
+  currentFilter = filter;
+  filterButtons.forEach((button) => {
+    const isActive = button.dataset.filter === filter;
+    button.classList.toggle("active", isActive);
+    button.setAttribute("aria-pressed", String(isActive));
+  });
+  renderTodos();
+}
+
 todoForm.addEventListener("submit", (event) => {
   event.preventDefault();
   const text = todoInput.value.trim();
@@ -99,6 +138,10 @@ todoForm.addEventListener("submit", (event) => {
   addTodo(text);
   todoInput.value = "";
   todoInput.focus();
+});
+
+filterButtons.forEach((button) => {
+  button.addEventListener("click", () => setFilter(button.dataset.filter));
 });
 
 renderTodos();

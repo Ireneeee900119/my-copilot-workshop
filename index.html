@@ -22,6 +22,12 @@
         <button type="submit" class="add-button">新增</button>
       </form>
 
+      <nav class="filter-tabs" aria-label="待辦事項篩選">
+        <button type="button" class="filter-button active" data-filter="all" aria-pressed="true">全部</button>
+        <button type="button" class="filter-button" data-filter="active" aria-pressed="false">未完成</button>
+        <button type="button" class="filter-button" data-filter="completed" aria-pressed="false">已完成</button>
+      </nav>
+
       <p class="empty-message" id="empty-message">還沒有任何待辦事項，新增一個吧！</p>
       <ul class="todo-list" id="todo-list" aria-live="polite"></ul>
 
