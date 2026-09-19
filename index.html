@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>待辦清單</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <main class="app-shell">
+    <section class="todo-card" aria-labelledby="page-title">
+      <header class="app-header">
+        <p class="eyebrow">DAILY FOCUS</p>
+        <h1 id="page-title">待辦清單</h1>
+        <p class="subtitle">把今天重要的事，一件一件完成。</p>
+      </header>
+
+      <form class="todo-form" id="todo-form">
+        <label class="sr-only" for="todo-input">新增待辦事項</label>
+        <input id="todo-input" name="todo" type="text" placeholder="接下來要完成什麼？" autocomplete="off" maxlength="120">
+        <button type="submit" class="add-button">新增</button>
+      </form>
+
+      <p class="empty-message" id="empty-message">還沒有任何待辦事項，新增一個吧！</p>
+      <ul class="todo-list" id="todo-list" aria-live="polite"></ul>
+
+      <footer class="todo-footer">
+        <span id="remaining-count">未完成：0 項</span>
+        <span class="footer-mark" aria-hidden="true">●</span>
+      </footer>
+    </section>
+  </main>
+</body>
+</html>
