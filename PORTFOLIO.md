@@ -4,9 +4,7 @@
 
 ## 線上展示
 
-[GitHub Pages](https://<你的帳號>.github.io/<你的repo名稱>/)
-
-> 請將上方網址中的佔位文字替換成實際的 GitHub 帳號與 repository 名稱。
+[GitHub Pages](https://ireneeee900119.github.io/my-copilot-workshop/)
 
 ## 功能
 
