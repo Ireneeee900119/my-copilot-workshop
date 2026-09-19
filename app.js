@@ -5,6 +5,7 @@ const todoInput = document.querySelector("#todo-input");
 const todoList = document.querySelector("#todo-list");
 const emptyMessage = document.querySelector("#empty-message");
 const remainingCount = document.querySelector("#remaining-count");
+const clearCompletedButton = document.querySelector("#clear-completed-button");
 
 let todos = loadTodos();
 
@@ -63,7 +64,9 @@ function renderTodos() {
   });
 
   const incompleteCount = todos.filter((todo) => !todo.completed).length;
+  const completedCount = todos.length - incompleteCount;
   remainingCount.textContent = `未完成：${incompleteCount} 項`;
+  clearCompletedButton.disabled = completedCount === 0;
   emptyMessage.hidden = todos.length > 0;
 }
 
@@ -87,6 +90,18 @@ function deleteTodo(id) {
   renderTodos();
 }
 
+function clearCompletedTodos() {
+  const hasCompletedTodos = todos.some((todo) => todo.completed);
+
+  if (!hasCompletedTodos || !window.confirm("確定要清除所有已完成事項嗎？此操作無法復原。")) {
+    return;
+  }
+
+  todos = todos.filter((todo) => !todo.completed);
+  saveTodos();
+  renderTodos();
+}
+
 todoForm.addEventListener("submit", (event) => {
   event.preventDefault();
   const text = todoInput.value.trim();
@@ -100,5 +115,7 @@ todoForm.addEventListener("submit", (event) => {
   todoInput.value = "";
   todoInput.focus();
 });
+
+clearCompletedButton.addEventListener("click", clearCompletedTodos);
 
 renderTodos();
