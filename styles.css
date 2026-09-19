@@ -228,13 +228,36 @@ h1 {
 .todo-footer {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 12px;
   margin-top: 25px;
   padding-top: 18px;
   border-top: 1px solid var(--color-border);
   color: var(--color-muted);
   font-family: Arial, sans-serif;
   font-size: 0.82rem;
+}
+
+.clear-completed-button {
+  margin-left: auto;
+  padding: 7px 9px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  color: var(--color-muted);
+  background: transparent;
+  font-family: Arial, sans-serif;
+  font-size: 0.75rem;
+  transition: border-color 160ms ease, color 160ms ease, background 160ms ease;
+}
+
+.clear-completed-button:not(:disabled):hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent-dark);
+  background: var(--color-accent-soft);
+}
+
+.clear-completed-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
 }
 
 .footer-mark {
